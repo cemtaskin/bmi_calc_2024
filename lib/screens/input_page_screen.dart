@@ -1,8 +1,11 @@
+import 'package:bmi_calculator/components/calculate_button.dart';
 import 'package:bmi_calculator/components/gender_button.dart';
 import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:bmi_calculator/components/stepper_input.dart';
 import 'package:bmi_calculator/infrastructure/constant.dart';
 import 'package:bmi_calculator/infrastructure/enums.dart';
+import 'package:bmi_calculator/infrastructure/main_app.dart';
+import 'package:bmi_calculator/screens/result_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -16,7 +19,7 @@ class InputPageScreen extends StatefulWidget {
 class _InputPageScreenState extends State<InputPageScreen> {
   Gender selectedGender = Gender.unselected;
   var height = 90.0;
-  var weight = 60;
+  int weight = 60;
   var age = 18;
 
   @override
@@ -170,13 +173,14 @@ class _InputPageScreenState extends State<InputPageScreen> {
             ),
           ),
           Expanded(
-            flex: 1,
-            child: Container(
-              color: kBottomContainerColor,
-              margin: EdgeInsets.only(top: 10.0),
-              width: double.infinity,
-            ),
-          )
+              flex: 1,
+              child: CalculateButton(
+                title: 'CALCULATE',
+                onPress: () {
+                  MainApp().calculateBmi(weight.toDouble(), height);
+                  Navigator.pushNamed(context, '/resultPage');
+                },
+              ))
         ],
       ),
     );
